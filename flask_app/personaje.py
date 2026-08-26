@@ -5,10 +5,10 @@ class Personaje:
         self.nivel = nivel
         self.vida = vida
 
-def to_dict(self):
-    return {
-        "nombre": self.nombre,
-        "clase": self.clase,
-        "nivel": self.nivel,
-        "vida": self.vida
-    }
+    def to_dict(self):
+        return {
+            "nombre": self.nombre,
+            "clase": self.clase,
+            "nivel": self.nivel,
+            "vida": self.vida
+        }
