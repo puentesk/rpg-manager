@@ -18,6 +18,16 @@ public class RpgManager {
         app.get("/personajes", ctx ->{
             ctx.json(RepositorioPersonajes.listaPersonajes);
         });
+        
+        app.post("/personajes", ctx->{
+           Personaje nuevo = ctx.bodyAsClass(Personaje.class);
+        
+           RepositorioPersonajes.listaPersonajes.add(nuevo);
+           
+           ctx.status(201).json(nuevo);
+        });
+        
+        
     }
     
 }
