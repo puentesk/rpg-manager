@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RPG Manager - Flask</title>
+</head>
+<body>
+    <h1>Lista de Personajes</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Clase</th>
+                <th>Nivel</th>
+                <th>Vida</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in lista_personajes %}
+            <tr>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.clase }}</td>
+                <td>{{ p.nivel }}</td>
+                <td>{{ p.vida }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<h2>Crear Nuevo Personaje</h2>
+<form action="/personajes" method="POST">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required>
+
+    <label>Clase:</label>
+    <input type="text" name="clase" required>
+
+    <label>Nivel:</label>
+    <input type="number" name="nivel" value="1">
+
+    <label>Vida:</label>
+    <input type="number" name="vida" value="100">
+
+    <button type="submit">Guardar Personaje</button>
+</form>

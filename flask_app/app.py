@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request
 from personaje import Personaje
+from flask import Flask, jsonify, request, render_template, redirect
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
@@ -10,21 +12,25 @@ lista_personajes = [
 
 @app.route('/personajes', methods=['GET'])
 def obtener_personajes():
-    return jsonify([p.to_dict() for p in lista_personajes]), 200
+    #return jsonify([p.to_dict() for p in lista_personajes]), 200
+    return render_template('index.html', lista_personajes=lista_personajes)
 
 @app.route('/personajes', methods=['POST'])
 def crear_personaje():
-    datos = request.get_json()
-    
+    nombre = request.form.get('nombre')
+    clase = request.form.get('clase')
+    nivel = int(request.form.get('nivel'))
+    vida = int(request.form.get('vida'))
+
     nuevo_personaje = Personaje(
-        nombre=datos.get('nombre'),
-        clase=datos.get('clase'),
-        nivel=datos.get('nivel'),
-        vida=datos.get('vida')
+        nombre=nombre,
+        clase=clase,
+        nivel=nivel,
+        vida=vida
     )
-    
+
     lista_personajes.append(nuevo_personaje)
-    return jsonify(nuevo_personaje.to_dict()), 201
+    return redirect('/personajes')
 
 if __name__ == '__main__':
     app.run(debug=True)
