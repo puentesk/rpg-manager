@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RPG Manager</title>
+</head>
+<body>
+    <h1>Lista de Personajes</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Clase</th>
+                <th>Nivel</th>
+                <th>Vida</th>
+            </tr>
+        </thead>
+        
+        <tbody id="tabla-personajes">
+            
+        </tbody>
+    </table>
+
+    <script>
+        fetch('/personajes')
+            .then(respuesta => respuesta.json())
+            .then(personajes => {
+                const tbody = document.getElementById('tabla-personajes');
+                tbody.innerHTML = ''; 
+
+                personajes.forEach(p => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${p.nombre}</td>
+                            <td>${p.clase}</td>
+                            <td>${p.nivel}</td>
+                            <td>${p.vida}</td>
+                        </tr>
+                    `;
+                });
+            });
+    </script>
+</body>
+</html>
+
+<h2>Crear Nuevo Personaje</h2>
+<form action="/personajes" method="POST">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required>
+
+    <label>Clase:</label>
+    <input type="text" name="clase" required>
+
+    <label>Nivel:</label>
+    <input type="number" name="nivel" value="1">
+
+    <label>Vida:</label>
+    <input type="number" name="vida" value="100">
+
+    <button type="submit">Guardar Personaje</button>
+</form>
