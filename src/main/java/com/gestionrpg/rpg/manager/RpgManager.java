@@ -36,10 +36,15 @@ public class RpgManager {
             String clase = ctx.formParam("clase");
             int nivel = Integer.parseInt(ctx.formParam("nivel"));
             int vida = Integer.parseInt(ctx.formParam("vida"));
-
             Personaje nuevo = new Personaje(nombre, clase, nivel, vida);
-            RepositorioPersonajes.listaPersonajes.add(nuevo);
             
+            PersonajeServicio servicio = new PersonajeServicio();
+            
+            if (!servicio.validarPersonaje(new Personaje(nombre, clase, nivel, vida))) {
+                ctx.status(400).result("Datos de personaje invalidos");
+                return;
+            }
+            RepositorioPersonajes.listaPersonajes.add(nuevo);
             ctx.redirect("/");
         });
         
