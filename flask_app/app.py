@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from personaje import Personaje
 from flask import Flask, jsonify, request, render_template, redirect
 from flask import Flask, render_template, request, redirect
+from services.personaje_service import validar_personaje
 
 app = Flask(__name__)
 
@@ -17,10 +18,16 @@ def obtener_personajes():
 
 @app.route('/personajes', methods=['POST'])
 def crear_personaje():
+
     nombre = request.form.get('nombre')
     clase = request.form.get('clase')
     nivel = int(request.form.get('nivel'))
     vida = int(request.form.get('vida'))
+
+    es_valido, mensaje = validar_personaje(nombre, clase, nivel, vida)
+
+    if not es_valido:
+        return render_template('index.html', lista_personajes=lista_personajes, error=mensaje)
 
     nuevo_personaje = Personaje(
         nombre=nombre,

@@ -27,7 +27,9 @@
             {% endfor %}
         </tbody>
     </table>
-
+{% if error %}
+    <p style="color: red; font-weight: bold;">{{ error }}</p>
+{% endif %}
 <h2>Crear Nuevo Personaje</h2>
 <form action="/personajes" method="POST">
     <label>Nombre:</label>
